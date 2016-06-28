@@ -1,0 +1,31 @@
+{% extends "OCCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Accueil
+{% endblock %}
+
+{% block body %}
+
+
+    {% for message in app.session.flashBag.get('notice') %}
+        <div class="alert alert-info alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Message flash:</strong> {{ message }}
+        </div>
+    {% endfor %}
+
+    <h1>Bienvenue!</h1>
+
+    <hr>
+
+    <h2>Dernières annonces</h2>
+
+    <ul>
+        {# j'appelle à l'action latest d'AdvertBundle pour récupérer les dernières adverts
+          et de cette façon reutiliser le code déjà fait #}
+        {{ render(controller("OCPlatformBundle:Advert:latest", {'limit': 3})) }}
+    </ul>
+
+{% endblock %}

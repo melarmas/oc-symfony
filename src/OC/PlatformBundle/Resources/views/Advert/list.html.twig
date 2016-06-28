@@ -1,0 +1,10 @@
+{# Cette template retourne seulment des elements li,
+de cette façon on peur la renderiser peu importe le style de la liste (ul) #}
+
+{% for advert in listAdverts %}
+    <li>
+        <a href="{{ path('oc_platform_view', {'id': advert.id}) }}">
+            {{ advert.title }}
+        </a>
+    </li>
+{% endfor %}
