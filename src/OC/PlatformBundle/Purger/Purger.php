@@ -45,6 +45,16 @@ class Purger
         //on enlève les adverts vieux
         foreach($outdated as $advert){
             $this->em->remove($advert);
+
+            //on enlève les adverts skills
+            $listAdvertSkills = $this->em
+                ->getRepository('OCPlatformBundle:AdvertSkill')
+                ->findBy(array('advert' => $advert))
+            ;
+
+            foreach($listAdvertSkills as $as){
+                $this->em->remove($as);
+            }
         }
 
         $this->em->flush();

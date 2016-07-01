@@ -14,6 +14,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Generator;
 use OC\PlatformBundle\Entity\Advert;
+use OC\PlatformBundle\Entity\AdvertSkill;
 use OC\PlatformBundle\Entity\Application;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -59,20 +60,33 @@ class LoadAdvert extends  AbstractFixture implements ContainerAwareInterface, Or
 
             $manager->persist($advert);
 
-            //categories
-            $nbCategories = mt_rand(0, 5); $offset = mt_rand($nbCategories, 5);
+            $nb = mt_rand(0, 5); $offset = mt_rand($nb, 5);
 
+            //categories
             $categories = $manager->getRepository('OCPlatformBundle:Category')
-                ->findBy(array(), array(), $nbCategories, $offset);
+                ->findBy(array(), array(), $nb, $offset);
 
             foreach($categories as $c){
                 $advert->addCategory($c);
             }
 
-            //applications (0, 5)
-            $nbApplications = mt_rand(0, 5);
+            //skills
+            $skills = $manager->getRepository('OCPlatformBundle:Skill')
+                ->findBy(array(), array(), $nb, $offset);
 
-            for($j = 0; $j < $nbApplications; $j++){
+            foreach($skills as $s){
+                $advertSkill = new AdvertSkill();
+
+                $advertSkill->setSkill($s)
+                    ->setAdvert($advert)
+                    ->setLevel('Expert')
+                ;
+
+                $manager->persist($advertSkill);
+            }
+
+            //applications
+            for($j = 0; $j < $nb; $j++){
                 $app = new Application();
 
                 $app->setDate(new \DateTime('now'))
