@@ -11,7 +11,7 @@ namespace OC\PlatformBundle\Purger;
 
 use Doctrine\ORM\EntityManager;
 
-class PurgerService
+class Purger
 {
     /**
      * @var EntityManager

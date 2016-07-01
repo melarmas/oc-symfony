@@ -15,5 +15,5 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
 
     oc_platform.advert_purger:
-        class: OC\PlatformBundle\Purger\PurgerService
+        class: OC\PlatformBundle\Purger\Purger
         arguments: [ "@doctrine.orm.default_entity_manager" ]
