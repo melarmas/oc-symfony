@@ -33,4 +33,14 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
         // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($query, true);
     }
+
+    public function getOutdated($date){
+
+        $query = $this->createQueryBuilder('a')
+            ->where('a.applications IS EMPTY')
+            ->andWhere('a.updatedAt < :date')
+            ->setParameter('date', $date);
+
+        return $query->getQuery()->getResult();
+    }
 }

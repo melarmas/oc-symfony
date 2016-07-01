@@ -7,6 +7,7 @@ use OC\PlatformBundle\Entity\Advert;
 use OC\PlatformBundle\Entity\Image;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -169,6 +170,14 @@ class AdvertController extends Controller
         return $this->render('OCPlatformBundle:Advert:list.html.twig', array(
             'listAdverts' => $listAdverts
         ));
+    }
+
+    public function purgeAction($days)
+    {
+       $total = $this->get('oc_platform.advert_purger')
+            ->purge($days);
+
+        return new Response(sprintf('%d deleted adverts', $total));
     }
 
 }

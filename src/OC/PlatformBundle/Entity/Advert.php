@@ -60,8 +60,6 @@ class Advert
      */
     private $applications; // Notez le « s », une annonce est liée à plusieurs candidatures
 
-    //todo: poner bidireccional con AadvertSkills
-
     /**
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
@@ -129,23 +127,8 @@ class Advert
         return $this->title;
     }
 
-    /**
-     * @param string $author
-     * @return Advert
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-        return $this;
-    }
 
-    /**
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
+
 
     /**
      * @param string $content
@@ -325,5 +308,29 @@ class Advert
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     *
+     * @return Advert
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }
