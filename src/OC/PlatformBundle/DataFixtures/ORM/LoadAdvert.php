@@ -77,10 +77,9 @@ class LoadAdvert extends  AbstractFixture implements ContainerAwareInterface, Or
             foreach($skills as $s){
                 $advertSkill = new AdvertSkill();
 
-                $advertSkill->setSkill($s)
-                    ->setAdvert($advert)
-                    ->setLevel('Expert')
-                ;
+                $advertSkill->setLevel('Expert');
+                $advert->addAdvertSkill($advertSkill);
+                $s->addAdvertSkill($advertSkill);
 
                 $manager->persist($advertSkill);
             }

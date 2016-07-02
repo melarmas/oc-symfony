@@ -56,6 +56,12 @@ class Advert
     private $categories;
 
     /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\AdvertSkill", mappedBy="advert")
+     */
+    private $advertSkills;
+
+    /**
      * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Application", mappedBy="advert")
      */
     private $applications; // Notez le « s », une annonce est liée à plusieurs candidatures
@@ -81,6 +87,7 @@ class Advert
         $this->date         = new \Datetime();
         $this->categories   = new ArrayCollection();
         $this->applications = new ArrayCollection();
+        $this->advertSkills = new ArrayCollection();
     }
 
     /**
@@ -332,5 +339,41 @@ class Advert
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Add advertSkill
+     *
+     * @param \OC\PlatformBundle\Entity\AdvertSkill $advertSkill
+     *
+     * @return Advert
+     */
+    public function addAdvertSkill(AdvertSkill $advertSkill)
+    {
+        $this->advertSkills[] = $advertSkill;
+
+        $advertSkill->setAdvert($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove advertSkill
+     *
+     * @param \OC\PlatformBundle\Entity\AdvertSkill $advertSkill
+     */
+    public function removeAdvertSkill(AdvertSkill $advertSkill)
+    {
+        $this->advertSkills->removeElement($advertSkill);
+    }
+
+    /**
+     * Get advertSkills
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdvertSkills()
+    {
+        return $this->advertSkills;
     }
 }

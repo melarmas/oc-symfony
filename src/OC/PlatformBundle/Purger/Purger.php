@@ -10,6 +10,7 @@ namespace OC\PlatformBundle\Purger;
 
 
 use Doctrine\ORM\EntityManager;
+use OC\PlatformBundle\Entity\Advert;
 
 class Purger
 {
@@ -43,14 +44,14 @@ class Purger
         $total = count($outdated);
 
         //on enlève les adverts vieux
+        /**
+         * @var Advert $advert
+         */
         foreach($outdated as $advert){
             $this->em->remove($advert);
 
             //on enlève les adverts skills
-            $listAdvertSkills = $this->em
-                ->getRepository('OCPlatformBundle:AdvertSkill')
-                ->findBy(array('advert' => $advert))
-            ;
+            $listAdvertSkills = $advert->getAdvertSkills();
 
             foreach($listAdvertSkills as $as){
                 $this->em->remove($as);

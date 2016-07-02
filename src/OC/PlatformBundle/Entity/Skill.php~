@@ -3,6 +3,7 @@
 
 namespace OC\PlatformBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,20 @@ class Skill
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\AdvertSkill", mappedBy="skill")
+     */
+    private $advertSkills;
+
+    /**
+     * Skill constructor.
+     */
+    public function __construct()
+    {
+        $this->advertSkills = new ArrayCollection();
+    }
 
     // Getters et setters
 
